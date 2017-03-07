@@ -14,4 +14,43 @@ RSpec.describe Task, type: :model do
       expect(task.complete).to eq(true)
     end
   end
+  describe '#toggle_favorite' do 
+    it 'should switch favorite to true if it is false' do 
+      task = Task.new(favorite: false)
+      task.toggle_favorite!
+      expect(task.favorite).to eq(true) 
+    end 
+    it 'should switch favorite to false if it is true' do 
+      task = Task.new(favorite: true)
+      task.toggle_favorite!
+      expect(task.favorite).to eq(false)
+    end
+  end 
+  describe '#overdue' do 
+    it 'should return time greater than deadline' do 
+      task = Task.new(deadline: Time.now - 2.days)
+      expect(task.overdue?).to eq(true)
+    end 
+  end 
+  describe '#increment_priority' do
+    it 'should update priority to priority + 1' do 
+      task = Task.new(priority: 6)
+      task.increment_priority!
+      expect(task.priority).to eq(7)
+    end 
+  end 
+  describe '#decrement_priority' do
+    it 'should update priority to priority - 1' do 
+      task = Task.new(priority: 3)
+      task.decrement_priority!
+      expect(task.priority).to eq(2)
+    end 
+  end 
+  describe '#snooze_hour' do 
+    it 'should update deadline to deadline + 1 hour' do
+      task = Task.new(deadline: 2017-03-07 10:12:18.229534238)
+      task.snooze_hour!
+      expect(task.deadline).to eq(2017-03-07 11:12:18.229534238)
+    end 
+  end 
 end
